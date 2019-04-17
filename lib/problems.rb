@@ -111,6 +111,22 @@ end
 #     1-dimensional array: ['some data']
 #     2-dimensional array: [['some data']]
 #     3-dimensional array: [[['some data']]]
-def flatten(data)
-  
+
+
+# [1,[2,[3]]] => [1,2,3]
+def flatten(data, results = [])
+  return [data] if data.class != Array
+  data.each do |el|
+    if el.class == Array
+      flatten(el, results)
+    else
+      results << el
+    end
+  end
+  results
 end
+
+p flatten([1,[2,[3]]]) # => [1,2,3]
+p flatten([1, 2, [[3, 4], [5, [6]]], [7, 8]]) # => [ 1, 2, 3, 4, 5, 6, 7, 8 ]
+p flatten('hi') # => ['hi']
+p flatten(['this', ['problem', 'is'], [['pretty', 'tough'], [[':)']]]]) # => [ 'this', 'problem', 'is', 'pretty', 'tough', ':)']
